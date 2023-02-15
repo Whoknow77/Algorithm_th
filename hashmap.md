@@ -43,8 +43,6 @@ JS에서 key-value로 이루어진 자료구조는 Object가 대표적이였지�
     map.set(obj, 2); //key에 object 가능
     map.set(fnc, 3); // key에 함수 가능
     map.set(number, 0); // 덮어쓰기 가능
-
-    console.log(map); // Map(4) {0 => 0, "string" => 1, {…} => 2, ƒ => 3}
     ```
 
     이처럼 `key`값에 다양한 자료형들이 들어갈 수 있다.
