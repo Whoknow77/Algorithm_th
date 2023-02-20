@@ -13,3 +13,7 @@
 - ### [Greedy](./greedy.md)
 
 - ### [이진 탐색(Binary Search)](./binary.md)
+
+- ### [Parametric Search(매개변수 탐색)](./parametric.md)
+
+- ### [DFS / BFS](./dfsbfs.md)
