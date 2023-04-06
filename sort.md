@@ -142,8 +142,79 @@
 
     - 자료의 개수가 많아질수록 성능이 매우 떨어진다.
 
+- ## 병합정렬
+
+  - 병합정렬이란?
+
+    - 분할 정복 알고리즘 중 하나에 속하며 하나의 리스트를 두 개의 균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음, 두 개의 정렬된 부분 리스트를 합하여 전체가 정렬된 리스트가 되게 하는 방법이다.
+
+        <img src="https://gmlwjd9405.github.io/images/algorithm-merge-sort/merge-sort-concepts.png" height="300" width="300">
+
+  - 과정
+
+  1.  리스트의 길이가 0 또는 1이면 이미 정렬된 것으로 본다. 그렇지 않은 경우에는
+  2.  정렬되지 않은 리스트를 절반으로 잘라 비슷한 크기의 두 부분 리스트로 나눈다.
+  3.  각 부분 리스트를 재귀적으로 합병 정렬을 이용해 정렬한다.
+
+  4.  두 부분 리스트를 다시 하나의 정렬된 리스트로 합병한다.
+
+      **비교 하기 전에 원소들은 이미 정렬이 되어있고, 자리를 찾아서 들어가기만 하면됨**
+
+  - 시간 복잡도
+
+    - T(n) = nlog₂n(비교) + 2nlog₂n(이동) = 3nlog₂n = O(nlog₂n)
+
+  - 구현
+
+    ```js
+    function merge(left, right) {
+      const sortedArr = [];
+      while (left.length && right.length) {
+        //left[0]이 더작을 경우 같을때는 누가 먼저 들어가도 상관X
+        if (left[0] <= right[0]) {
+          sortedArr.push(left.shift());
+        } else {
+          sortedArr.push(right.shift());
+        }
+      }
+      //left,right 둘 중 하나는 요소가 남아있기 때문에 sortedArr 뒤에 붙여서 출력
+      //비어있으면 spread Syntax에도 아무것도 없기 때문에 그냥 다 붙여준다.
+      return [...sortedArr, ...left, ...right];
+    }
+
+    function mergeSort(arr) {
+      if (arr.length === 1) return arr;
+      const boundary = Math.ceil(arr.length / 2);
+      //slice로 해주기 때문에 원본 arr은 손상 없다.
+      const left = arr.slice(0, boundary);
+      const right = arr.slice(boundary);
+      //요소가 1개 일 때까지 재귀를 실행해 요소가 1개일 때 두 left,right부터
+      //차근차근 merge(정렬해서 합치기)해주면 된다.
+      return merge(mergeSort(left), mergeSort(right));
+    }
+
+    const arr = [7, 4, 3, 2, 1, 6, 5];
+    const sortedArray = mergeSort(arr);
+    console.log(arr); //[7, 4, 3, 2, 1, 6, 5]
+    console.log(sortedArray); //[1, 2, 3, 4,5, 6, 7]
+    ```
+
+  - 장점
+
+    - 안정적인 정렬 방법(데이터 분포에 영향을 덜 받는다.)
+    - 만약 레코드를 연결 리스트(Linked List)로 구성하면, 링크 인덱스만 변경되므로 데이터의 이동은 무시할 수 있을 정도로 작아진다.
+
+  - 단점
+
+    - 자료의 개수가 많아질수록 성능이 매우 떨어진다.
+    - 만약 레코드를 배열(Array)로 구성하면, 임시 배열이 필요하다.
+
 ## 참고자료
 
 https://webruden.tistory.com
 
 https://im-developer.tistory.com/133
+
+https://gmlwjd9405.github.io/2018/05/08/algorithm-merge-sort.html
+
+https://velog.io/@proshy/JSmerge-sort%ED%95%A9%EB%B3%91-%EC%A0%95%EB%A0%AC
