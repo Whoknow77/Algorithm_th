@@ -19,3 +19,5 @@
 - ### [DFS / BFS](./dfsbfs.md)
 
 - ### [DP](./dp.md)
+
+- ### [LIS](./LIS.md)
